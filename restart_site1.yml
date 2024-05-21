@@ -1,0 +1,17 @@
+---
+
+- hosts: aap
+  gather_facts: false
+  tasks:
+  - name: stop automation controller
+    ansible.builtin.service:
+      name: automation-controller
+      state: started
+
+- hosts: db
+  gather_facts: false
+  tasks:
+  - name: stop postgresql
+    ansible.builtin.service:
+      name: postgresql
+      state: started
