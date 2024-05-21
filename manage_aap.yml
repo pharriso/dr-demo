@@ -1,0 +1,11 @@
+---
+
+- hosts: aap
+  gather_facts: false
+  tasks:
+  - ansible.builtin.pause: 
+      seconds: "{{ pause_seconds | default('1') }}"
+  - name: stop automation controller
+    ansible.builtin.service:
+      name: automation-controller
+      state: "{{ service_state }}"

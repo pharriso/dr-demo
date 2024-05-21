@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  tasks:
+
+  - name: check change state
+    servicenow.itsm.change_request_info:
+      number: "{{ snow_chg_no }}"
+    register: chg_details
+    delegate_to: localhost
+
+  - name: display change state
+    ansible.builtin.debug:
+      msg: "change state - {{ chg_details.records.0.state }}"
+    when: "chg_details.records | length > 0"
+
+  - name: error out if no records returned
+    ansible.builtin.fail:
+      msg: "{{ snow_chg_no }} has returned no records from SNOW, Please Check and re-enter"
+    when: "chg_details.records | length == 0"
+
+  - name: check if change record is in scheduled state
+    ansible.builtin.fail:
+      msg: "{{ snow_chg_no }} is currently reporting as {{ chg_details.records.0.state }}, A Change must be in scheduled or implement before proceeding"
+    when: (chg_details.records.0.state != 'scheduled') and (chg_details.records.0.state != 'implement')
+
+  - name: move the change to implement
+    servicenow.itsm.change_request:
+      state: implement
+      number: "{{ snow_chg_no }}"
+    delegate_to: localhost

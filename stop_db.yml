@@ -1,0 +1,9 @@
+---
+
+- hosts: db
+  gather_facts: false
+  tasks:
+  - name: stop postgresql
+    ansible.builtin.service:
+      name: postgresql
+      state: "{{ service_state }}"

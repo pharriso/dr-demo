@@ -1,0 +1,14 @@
+--- 
+
+- hosts: aap
+  gather_facts: false
+  tasks:
+  - name: poll the controller api until it is down
+    ansible.builtin.uri:
+      url: https://{{ ansible_host }}/api/v2/ping/
+      validate_certs: false
+    register: api_status
+    until: api_status.status != 200 
+    retries: 30
+    delay: 5
+    ignore_errors: true

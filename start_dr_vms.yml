@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  gather_facts: false
+  vars:
+    aap_state: started
+  tasks:
+  - name: manage aap instances - {{ aap_state }}
+    amazon.aws.ec2_instance:
+      instance_ids:
+      - "{{ instance_id }}"
+      state: "{{ aap_state }}"
+      region: eu-west-1
+    delegate_to: localhost
