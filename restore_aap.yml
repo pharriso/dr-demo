@@ -1,19 +1,9 @@
 ---
-
-- hosts: aap
+- name: Restore AAP
+  hosts: aap
   tasks:
-  - name: create backup dir
-    ansible.builtin.file:
-      path: /opt/backups
-      state: directory
-      mode: 0755
-      owner: aap
-      group: aap
-    become: true
-    delegate_to: "{{ awx_execution_node }}"
-
-  - name: run a backup
-    ansible.builtin.command:
-      chdir: /home/aap/ansible-automation-platform-setup-bundle-2.4-6.2-x86_64
-      cmd: ./setup.sh -r -i site2-inventory -- -b
-    delegate_to: "{{ awx_execution_node }}"
+    - name: Restore the instance
+      ansible.builtin.command:
+        chdir: /home/aap/ansible-automation-platform-setup-bundle-2.4-6.2-x86_64
+        cmd: ./setup.sh -r -i site2-inventory -- -b
+      delegate_to: "{{ awx_execution_node }}"
