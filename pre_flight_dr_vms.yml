@@ -19,11 +19,11 @@
     #   ansible.builtin.debug:
     #     msg: "{{ ansible_facts }}"
 
-    - name: List firewalld info
-      ansible.builtin.shell:
-        cmd: firewall-cmd --list-all
-      register: firewall_out
+    - name: Get security group port information
+      amazon.aws.ec2_security_group_info:
+        filters:
+          vpc-id: "{{ vpc_id }}"
 
-    - name: List TCP ports
+    - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ firewall_out }}"
+        msg: "{{ vpc-id }}"
