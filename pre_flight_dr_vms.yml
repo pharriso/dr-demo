@@ -27,4 +27,4 @@
 
     - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ vpc_info.security_groups | selectattr('group_name') }}"
+        msg: "{{ vpc_info.security_groups | selectattr('aap-sg', 'in', group_name) }}"
