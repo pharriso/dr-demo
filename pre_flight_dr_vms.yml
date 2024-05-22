@@ -1,9 +1,6 @@
 ---
-
 - hosts: all
-  gather_facts: false
-  collections:
-    community.general
+  gather_facts: true
 
   tasks:
     - name: Wait for VMs to be avaialble
@@ -20,4 +17,4 @@
 
     - name: List TCP ports
       ansible.builtin.debug:
-        msg: "{{ ansible_facts.tcp_listen  }}"
+        msg: "{{ ansible_facts }}"
