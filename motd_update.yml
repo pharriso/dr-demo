@@ -1,0 +1,13 @@
+---
+- name: Change motd after DR
+  hosts: aap,db
+  vars:
+    is_active: ""
+  tasks:
+    - name: Changeopy motd file to /etc/motd
+      ansible.builtin.copy:
+        content: "Last Failover Completed at {{ ansible_date_time.iso8601 }}. Instance status: {{ is_active }}"
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: '644'
