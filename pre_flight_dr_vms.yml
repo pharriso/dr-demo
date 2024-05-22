@@ -12,21 +12,18 @@
       ansible.builtin.ping:
       register: ping_pong
 
-    # - name: Gather facts on listening ports
-    #   community.general.listen_ports_facts:
-
-    # - name: List TCP ports
-    #   ansible.builtin.debug:
-    #     msg: "{{ ansible_facts }}"
-
     - name: Get security group port information
       amazon.aws.ec2_security_group_info:
         region: eu-west-1
       delegate_to: localhost
       register: vpc_info
 
-    - name: List SC Group config
-      ansible.builtin.debug:
-        msg: "{{ item.ip_permissions | map(attribute='from_port') | list }}"
+    - name: List ports
+      ansible.builtin.set_fact:
+        open_tcp_ports: "{{ item.ip_permissions | map(attribute='from_port') | list }}"
       loop: "{{ vpc_info.security_groups | selectattr('group_name', 'equalto', 'aap-sg') | list }}"
 
+    - name: Assert 5432 postgreSQL port is open
+      ansible.builtin.assert:
+        that:
+          - {{ open_tcp_ports is contains('5432') }}
