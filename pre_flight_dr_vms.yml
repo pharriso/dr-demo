@@ -26,4 +26,4 @@
     - name: Assert 5432 postgreSQL port is open
       ansible.builtin.assert:
         that:
-          - {{ open_tcp_ports is contains('5432') }}
+          - "{{ open_tcp_ports is contains('5432') }}"
