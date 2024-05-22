@@ -27,5 +27,4 @@
 
     - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ item.ip_permissions | map(attribute='from_port') | sort | list }}"
-      loop: "{{ vpc_info.security_groups }}"
+        msg: "{{ vpc_info.security_groups[0] | selectattr('group_name','equalto','aap-sg') }}"
