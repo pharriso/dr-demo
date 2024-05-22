@@ -27,5 +27,5 @@
 
     - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ vpc_info.security_groups | map(attribute='from_port') | unique | sort | list }} and \
-                {{ vpc_info.security_groups | map(attribute='to_port') | unique | sort | list }}"
+        msg: "{{ vpc_info.security_groups.ip_permissions | map(attribute='from_port') | unique | sort | list }} and \
+                {{ vpc_info.security_groups.ip_permissions | map(attribute='to_port') | unique | sort | list }}"
