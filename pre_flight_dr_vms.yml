@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  gather_facts: false
+  collections:
+    community.general
+
+  tasks:
+    - name: Wait for VMs to be avaialble
+      ansible.builtin.wait_for_connection:
+        delay: 10
+        timeout: 60
+
+    - name: Ping each host
+      ansible.builtin.ping:
+      register: ping_pong
+
+    - name: Gather facts on listening ports
+      community.general.listen_ports_facts:
+
+    - name: List TCP ports
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.tcp_listen  | map(attribute='port') | sort | list }}"
