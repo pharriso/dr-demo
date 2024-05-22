@@ -23,6 +23,7 @@
       amazon.aws.ec2_security_group_info:
         filters:
           vpc-id: "{{ vpc_id }}"
+        region: eu-west-1
       delegate_to: localhost
       register: vpc_info
 
