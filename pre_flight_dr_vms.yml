@@ -24,7 +24,8 @@
         filters:
           vpc-id: "{{ vpc_id }}"
       delegate_to: localhost
+      register: vpc_info
 
     - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ vpc-id }}"
+        msg: "{{ vpc_info }}"
