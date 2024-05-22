@@ -1,6 +1,6 @@
 ---
 - name: Change motd after DR
-  hosts: aap,db
+  hosts: all
   vars:
     is_active: ""
   tasks:
