@@ -27,5 +27,4 @@
 
     - name: List SC Group config
       ansible.builtin.debug:
-        msg: "{{ item }}"
-      loop: "{{ vpc_info.security_groups[0] }}"
+        msg: "{{ vpc_info.security_groups[0] | dict2items }}"
