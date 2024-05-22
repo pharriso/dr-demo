@@ -4,7 +4,7 @@
   vars:
     is_active: ""
   tasks:
-    - name: Changeopy motd file to /etc/motd
+    - name: Update the MOTD with failover information
       ansible.builtin.copy:
         content: "Last Failover Completed at {{ ansible_date_time.iso8601 }}. Instance status: {{ is_active }}"
         dest: /etc/motd
