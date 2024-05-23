@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  tasks:
+  - name: update change request
+    servicenow.itsm.change_request:
+      number: "{{ snow_chg_no }}"
+      other:
+        work_notes: "DR failover has completed succesfully. Application now running on site2."
+    delegate_to: localhost
